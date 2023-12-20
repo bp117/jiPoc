@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, Box, TextField, Button, Grid, Paper } from
 import { DataGrid } from '@mui/x-data-grid';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Description, Assignment, BugReport, ListAlt, CheckCircleOutline } from '@mui/icons-material';
+import { CircularProgress } from '@mui/material';
 
 interface BDDTestCase {
   testcase_desc: string;
@@ -50,6 +51,8 @@ function App() {
   const [outputText, setOutputText] = useState('');
   const [stories, setStories] = useState<Story[]>([]);
   const [selectedStory, setSelectedStory] = useState<Story>();
+  const [isLoading, setIsLoading] = useState(false);
+
   const API_ENDPOINT="us-central1-aiplatform.googleapis.com"
   const PROJECT_ID="telephonybot-384617"
   const MODEL_ID="gemini-pro"
@@ -114,6 +117,7 @@ function App() {
   
   
       const handleGenerateClick = async () => {
+        setIsLoading(true); 
         const generatedTextResponse = await generateStory(inputText) || '';
        
            
@@ -136,10 +140,13 @@ function App() {
             setStories(initialResponse); // Assuming setStories is your state update function
           } catch (error) {
             console.error('Error processing response:', error);
+          }finally {
+            setIsLoading(false);  // Stop loading regardless of success or error
           }
         } else {
           // Handle the case when generatedTextResponse is not a string
           console.error('Generated text is not a string:', generatedTextResponse);
+          setIsLoading(false);
         }
       };
       
@@ -244,9 +251,10 @@ function App() {
             />
           </Grid>
           <Grid item xs={2}>
-            <Button variant="contained" onClick={handleGenerateClick}>
-              Generate Stories
-            </Button>
+          <Button variant="contained" onClick={handleGenerateClick} disabled={isLoading}>
+  {isLoading ? <CircularProgress size={24} /> : "Generate Stories"}
+</Button>
+
           </Grid>
           <Grid item xs={5}>
             <TextField
