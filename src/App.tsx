@@ -58,7 +58,7 @@ function App() {
   const MODEL_ID="gemini-pro"
   const LOCATION_ID="us-central1"
   const genAI = new GoogleGenerativeAI(
-    "AIzaSyCYY7a0T-PqCjXoTNne4lpQM8AszQG7bqs"
+    "ccc"
   );
   const renderStoryIdCell = (params: any) => (
     <Box display="flex" alignItems="center">
@@ -203,8 +203,7 @@ function App() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization':`Bearer ya29.a0AfB_byBIWLmLD7WVpJtfPzANSGXWYiI5_D3Vny51mYNiYAmr6QH_cGZQSjEhJG5SIo_F6qL1Pq84WbvfO7rPn1YvdTXvo58yQQj5uyCHNV-gzH50UK2d_aJo_uxU4uQqJmZZZUDMaBh46f3NLoHU5Wjj9EbJIKawWHq1nZRG1j8aCgYKAfkSARASFQHGX2Mi171sEUy5PMv0IpYP-mST2A0178`
-          //'Authorization': `Bearer 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`
+         
         },
         body: JSON.stringify({ contents: [{role:"user",parts:[{text:prompt}]}], 
           generation_config: {
